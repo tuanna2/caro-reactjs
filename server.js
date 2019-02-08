@@ -5,12 +5,15 @@ const io = require('socket.io')(http);
 const path = require('path');
 
 
-app.get('*',(req,res)=>{
+// app.get('*',(req,res)=>{
+//     res.redirect('https://' + req.headers.host + req.url);
+//     res.send('hi');
+// });
+app.get('/',(req,res,next)=>{
+    req.secure ? next() :
     res.redirect('https://' + req.headers.host + req.url);
-    // res.send('hi');
-});
-app.get('/',(req,res)=>{
-    res.send('hi');
+},(req,res)=>{
+    res.json('ok')
 });
 var online= [];
 io.on('connection',socket=>{
